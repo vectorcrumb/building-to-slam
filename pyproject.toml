@@ -1,0 +1,16 @@
+[project]
+name = "slam"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.1.0",
+    "ipympl>=0.9.8",
+    "matplotlib>=3.10.8",
+    "numpy>=2.4.0",
+    "scipy>=1.16.3",
+]
