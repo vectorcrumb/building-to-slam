@@ -43,3 +43,6 @@
 
 # python
 .venv/
+/.quarto/
+**/*.quarto_ipynb
+/_site/

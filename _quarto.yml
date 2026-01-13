@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Building to SLAM"
+  site-path: "/building-to-slam"
+  site-url: https://vectorcrumb.github.io/building-to-slam/
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: 1_models/pendulum.ipynb
+        text: Pendulum Model
+      - about.qmd
+
+execute:
+  freeze: auto
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+
+
+
