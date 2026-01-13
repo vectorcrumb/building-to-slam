@@ -208,7 +208,7 @@ window.Quarto = {
 
 <p>So in my quest to recover some experience from my uni days, I’m building up to a custom implementation of SLAM from first principles. First thing’s first, everybody’s favorite control system, the pendulum!</p>
 <p>We know the model of the pendulum to be: <span class="math display">\[\frac{d^2\theta}{dt^2}+\frac{g}{\ell}\sin{\theta} = 0\]</span></p>
-<div id="f217c8f1" class="cell" data-execution_count="1">
+<div id="f217c8f1" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># %matplotlib ipympl</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.integrate <span class="im">as</span> spi</span>
@@ -221,14 +221,14 @@ window.Quarto = {
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>l <span class="op">=</span> <span class="fl">1.0</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>theta_0 <span class="op">=</span> np.zeros(<span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="f786e3f3" class="cell" data-execution_count="2">
+<div id="f786e3f3" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> f(x, t0, params):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    g, l <span class="op">=</span> params[<span class="st">'g'</span>], params[<span class="st">'l'</span>]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    theta, dtheta <span class="op">=</span> x[<span class="dv">0</span>], x[<span class="dv">1</span>]</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    ddtheta <span class="op">=</span> <span class="op">-</span> (g <span class="op">/</span> l) <span class="op">*</span> np.sin(theta)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.array([dtheta, ddtheta])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="34290466" class="cell" data-execution_count="3">
+<div id="34290466" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">2</span>))</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(<span class="fl">0.</span>, <span class="fl">3.</span>, <span class="dv">30</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>theta <span class="op">=</span> spi.odeint(f, theta_0, t, args<span class="op">=</span>({<span class="st">"g"</span>: g, <span class="st">"l"</span>: l},))</span>
@@ -251,7 +251,7 @@ window.Quarto = {
 \pi/2 \\ 0
 \end{bmatrix}
 \]</span></p>
-<div id="d4561900" class="cell" data-execution_count="4">
+<div id="d4561900" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>theta_0 <span class="op">=</span> np.array([np.pi<span class="op">/</span><span class="dv">2</span>, <span class="dv">0</span>])</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">2</span>))</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(<span class="fl">0.</span>, <span class="fl">10.</span>, <span class="dv">100</span>)</span>
@@ -268,7 +268,7 @@ window.Quarto = {
 </div>
 </div>
 <p>Much better! Now, we can use some movie magic (ahem LLMs) and try to create an animation based on this. I got Gemini to generate the following code:</p>
-<div id="eb4d747e" class="cell" data-execution_count="5">
+<div id="eb4d747e" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> matplotlib.animation <span class="im">import</span> FuncAnimation</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> animate_pendulum(t, states, params):</span>
@@ -328,7 +328,7 @@ window.Quarto = {
 <span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ani</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We can now simulate a quick animation of the pendulum:</p>
-<div id="85e82f61" class="cell" data-execution_count="6">
+<div id="85e82f61" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib widget</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>theta_0 <span class="op">=</span> np.array([np.pi<span class="op">/</span><span class="dv">2</span> <span class="op">*</span> <span class="fl">1.1</span>, <span class="dv">0</span>])</span>
@@ -339,7 +339,7 @@ window.Quarto = {
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"8900a78bd55e409e878243600e09bef5","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"988d12df9807457e9e936c96aa119004","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 </div>
@@ -348,7 +348,7 @@ window.Quarto = {
 <p>From the first equation, the angular velocity must be 0. From the second equation, we obtain the following relation: <span class="math display">\[ \sin{\theta} = 0 \rightarrow \; \theta_{eq} = n\pi,\; n = 0, 1, 2, ...\]</span></p>
 <p>We therefore know we’ll find these equilibrium points at any multiple of <span class="math inline">\(\pi\)</span>. In this case, we only care for what’s in the interval <span class="math inline">\([0,2\pi]\)</span>, so we study the first two equilibrium points, <span class="math inline">\(0\)</span> and <span class="math inline">\(\pi\)</span>. Using the Jacobian we can determine the type of stability of the equilibrium points. If: - All the eigenvalues of the Jacobian have negative real parts <span class="math inline">\(\mathrm{Re}(\lambda_i) &lt; 0\)</span>, the system is <strong>asymptotically stable</strong>. - Any of the eigenvalues of the Jacobian have a positive real part, the system is <strong>unstable</strong>.</p>
 <p>For our purposes, it is pretty evident that the equilibrium point <span class="math inline">\([0, 0]\)</span> is stable, whereas the equilibrium point <span class="math inline">\([\pi, 0]\)</span> is unstable. We can try plotting the results of starting the system in this unstable equilibrium point, as well as slightly shifted away from it (around 0.11 radians or 0.6 degrees)</p>
-<div id="21e178d9" class="cell" data-execution_count="7">
+<div id="21e178d9" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">1</span>, figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">2</span>))</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(<span class="fl">0.</span>, <span class="fl">8.</span>, <span class="dv">100</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Unstable point (hope that pi is represented well enough with floating point)</span></span>
@@ -365,7 +365,7 @@ window.Quarto = {
 <span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>ax.legend()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id":"9fa088bd60f94d218b6cd2e206086507","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+{"model_id":"693130282df04eddb6e85469ea992757","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
 </script>
 </div>
 </div>
